@@ -1,0 +1,13 @@
+/bin/
+*~
+.classpath
+.jcons/
+.project
+TAGS
+aaa
+bbb
+ccc
+commands.txt
+prog.c
+prog.h
+/target/
