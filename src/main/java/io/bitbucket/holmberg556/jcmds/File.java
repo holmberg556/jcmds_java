@@ -10,7 +10,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import io.bitbucket.holmberg556.jcmds.Builder.BaseFun;
-import io.bitbucket.holmberg556.jcmds.Builder.Color;
 
 public class File extends Entry {
 
@@ -18,6 +17,12 @@ public class File extends Entry {
         UNKNOWN,
         OK,
         ERROR
+    }
+
+    enum Color {
+        WHITE,
+        BLACK,
+        GREY
     }
 
     @Override

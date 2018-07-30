@@ -14,12 +14,6 @@ class Builder {
         void callNext();
     }
 
-    enum Color {
-        WHITE,
-        BLACK,
-        GREY
-    }
-
     static class IncludesTree {
         HashMap<File, ArrayList<File>> deps = new HashMap<>();
         HashMap<File, ArrayList<File>> inverted_deps = new HashMap<>();
@@ -45,52 +39,52 @@ class Builder {
         void calculate_finished() {
             for(HashMap.Entry<File,ArrayList<File>> e : deps.entrySet()) {
                 File k = e.getKey();
-                k.color = Color.WHITE;
+                k.color = File.Color.WHITE;
                 for (File v : e.getValue()) {
-                    v.color = Color.WHITE;
+                    v.color = File.Color.WHITE;
                 }
             }
             // XXX finished = new ArrayList<File>();
             for (HashMap.Entry<File, ArrayList<File>> e : deps.entrySet()) {
                 File k = e.getKey();
-                if (k.color == Color.WHITE) {
+                if (k.color == File.Color.WHITE) {
                     _calculate_finished_dfs(k);
                 }
             }
         }
 
         void _calculate_finished_dfs(File f) {
-            f.color = Color.GREY;
+            f.color = File.Color.GREY;
             ArrayList<File> f2s = deps.get(f);
             if (f2s != null) {
                 for (File f2 : f2s) {
-                    if (f2.color == Color.WHITE) {
+                    if (f2.color == File.Color.WHITE) {
                         _calculate_finished_dfs(f2);
                     }
                 }
             }
-            f.color = Color.BLACK;
+            f.color = File.Color.BLACK;
             finished.add(f);
         }
 
         void sccs_prepare() {
             for (File f : finished) {
-                f.color = Color.WHITE;
+                f.color = File.Color.WHITE;
             }
         }
 
         void sccs_dfs(File f, ArrayList<File> group_elements) {
-            f.color = Color.GREY;
+            f.color = File.Color.GREY;
             group_elements.add(f);
             ArrayList<File> f2s = inverted_deps.get(f);
             if (f2s != null) {
                 for (File f2 : f2s) {
-                    if (f2.color == Color.WHITE) {
+                    if (f2.color == File.Color.WHITE) {
                         sccs_dfs(f2, group_elements);
                     }
                 }
             }
-            f.color = Color.BLACK;
+            f.color = File.Color.BLACK;
         }
     }
 
@@ -325,7 +319,7 @@ class Builder {
             ArrayList<Integer> group_offset1 = new ArrayList<>();
             ArrayList<Integer> group_offset2 = new ArrayList<>();
             for (File it : m_includes_tree.finished) {
-                if (it.color == Color.WHITE) {
+                if (it.color == File.Color.WHITE) {
                     int x1 = group_elements.size();
                     group_offset1.add(x1);
                     m_includes_tree.sccs_dfs(it, group_elements);
