@@ -40,7 +40,7 @@ public class CppPathMap {
     static HashMap<String, HashSet<Dir>> dirsByName = new HashMap<>();
     
     static void cacheFilesystemInfo() {
-        // System.out.printf("cacheFilesystemInfo ............. size=%d\n",
+        // System.out.printf("cacheFilesystemInfo ............. size=%d%n",
         // s_arr_to_obj.size());
         HashSet<Dir> seenDir = new HashSet<>();
         for (CppPathMap pm : s_arr_to_obj.values()) {
@@ -53,11 +53,11 @@ public class CppPathMap {
                 }
             }
         }
-        // System.out.printf("#elements = %d\n", dirByName.size());
+        // System.out.printf("#elements = %d%n", dirByName.size());
     }
 
     static void cacheDirInfo(Dir d) {
-        //System.out.printf("d = %s\n", d.path());
+        //System.out.printf("d = %s%n", d.path());
         try (DirectoryStream<Path> stream = Files
                 .newDirectoryStream(Paths.get(d.path()))) {
             for (Path file : stream) {
@@ -88,7 +88,7 @@ public class CppPathMap {
         }
         ArrayList<File> incs = new ArrayList<>();
         if (Opts.debug)
-            System.out.printf("*********** db_includes: %s\n", node.db_includes());
+            System.out.printf("*********** db_includes: %s%n", node.db_includes());
         for (Include include : node.db_includes()) {
             File inc = by_dir1.get(include);
             if (inc == File.null_sentinel)
@@ -121,29 +121,29 @@ public class CppPathMap {
         // calculate new value and cache it
         Dir dir = dirByName.get(file);
         if (dir != null) {
-            // System.out.printf(">>>>>> dirByName: %s\n", file);
+            // System.out.printf(">>>>>> dirByName: %s%n", file);
             HashSet<Dir> dirset = dirsByName.get(file);
             if (dirset == null && m_cpp_path_set.contains(dir)) {
-                // System.out.printf(">>>>>> just in: %s\n", dir.path());
+                // System.out.printf(">>>>>> just in: %s%n", dir.path());
                 return dir.lookup_or_fs_file(file);
             } else if (dirset != null) {
-                // System.out.printf(">>>>>> several found: %s\n", dirset);
+                // System.out.printf(">>>>>> several found: %s%n", dirset);
                 File f = null;
                 for (Dir d : m_cpp_path_unique) {
                     if (dirset.contains(d)) {
                         f = d.lookup_or_fs_file(file);
                         if (f != null) {
-                            // System.out.printf(">>>>>> found: %s\n",
+                            // System.out.printf(">>>>>> found: %s%n",
                             // f.path());
                             return f;
                         }
                     }
                 }
-                // System.out.printf(">>>>>> not found: %s\n", f);
+                // System.out.printf(">>>>>> not found: %s%n", f);
                 return f;
             }
         }
-        // System.out.printf(">>>>>> fallback to normal handling of: %s\n",
+        // System.out.printf(">>>>>> fallback to normal handling of: %s%n",
         // file);
         File f = null;
         for (Dir d : m_cpp_path_unique) {
@@ -161,7 +161,7 @@ public class CppPathMap {
     public Digest get_result(File file) {
         Digest digest = m_file_to_result.get(file);
         if (digest == null) {
-            System.out.printf("INTERNAL ERROR - node_calc_md5 %s\n", file.path());
+            System.out.printf("INTERNAL ERROR - node_calc_md5 %s%n", file.path());
             System.exit(1);
         }
         return digest;

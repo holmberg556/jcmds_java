@@ -75,7 +75,7 @@ public class Cache {
             return false;
         }
         file.st_updated(dep_sig);
-        System.out.printf("Updated from cache: %s\n", file.path());
+        System.out.printf("Updated from cache: %s%n", file.path());
         return true;
     }
 

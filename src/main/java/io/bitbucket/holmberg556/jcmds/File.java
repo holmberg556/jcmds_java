@@ -89,10 +89,10 @@ public class File extends Entry {
     // Called when we consider rebuilding the file.
 
     Digest db_dep_sig() {
-        //System.out.printf("--> db_dep_sig: ???\n");
+        //System.out.printf("--> db_dep_sig: ???%n");
         ConsignEntry consign_entry = _consign_get_entry();
         if (consign_entry.dep_sig.invalid_p()) {
-            //System.out.printf("--> db_dep_sig: %s, INVALID\n", this.path());
+            //System.out.printf("--> db_dep_sig: %s, INVALID%n", this.path());
             return Digest.invalid;
         }
 
@@ -101,17 +101,17 @@ public class File extends Entry {
             return consign_entry.dep_sig;
         }
         Digest content_sig = get_file_digest(path());
-        //System.out.printf("--> db_dep_sig: %s, content_sig: %s <-> %s\n",
+        //System.out.printf("--> db_dep_sig: %s, content_sig: %s <-> %s%n",
         //        this.path(), content_sig, consign_entry.content_sig);
         if (content_sig.equals(consign_entry.content_sig)) {
             consign_entry.mtime = mtime;
             _consign_set_dirty();
-            //System.out.printf("--> db_dep_sig: %s, %s\n", this.path(), consign_entry.dep_sig);
+            //System.out.printf("--> db_dep_sig: %s, %s%n", this.path(), consign_entry.dep_sig);
             return consign_entry.dep_sig;
         }
         consign_entry.includes = null;
         _consign_set_dirty();
-        //System.out.printf("--> db_dep_sig: %s, UNDEFINED\n", this.path());
+        //System.out.printf("--> db_dep_sig: %s, UNDEFINED%n", this.path());
         return Digest.undefined;
     }
 
@@ -177,7 +177,7 @@ public class File extends Entry {
 
         consign_entry.includes = null;
         if (Opts.debug) {
-            System.out.printf("---> st_updated(%s, %s\n", this.path(), consign_entry.dep_sig);
+            System.out.printf("---> st_updated(%s, %s%n", this.path(), consign_entry.dep_sig);
         }
         this.build_ok = Status.OK;
     }
@@ -260,7 +260,7 @@ public class File extends Entry {
                 if (m.matches()) {
                     String quotes = m.group(1);
                     String filename = m.group(2);
-                    // System.out.printf("INCLUDE: %s --- %s\n", quotes,
+                    // System.out.printf("INCLUDE: %s --- %s%n", quotes,
                     // filename);
                     includes.add(new Include(quotes.charAt(0) == '"',filename));
                 }

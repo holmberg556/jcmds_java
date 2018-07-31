@@ -169,7 +169,7 @@ class Builder {
             String klass = stackTrace[1].getClassName();
             klass = klass.replaceAll(".*\\$", "");
             String name = this.name();
-            System.out.printf("        >>> %s.%s: %s\n", klass, method, name);
+            System.out.printf("        >>> %s.%s: %s%n", klass, method, name);
         }
     }
 
@@ -428,7 +428,7 @@ class Builder {
             if (tgt.is_source()) {
                 if (tgt.file_exist()) {
                     if (tgt.m_top_target) {
-                        System.out.printf("jcons: already up-to-date: '%s' (source file)\n",
+                        System.out.printf("jcons: already up-to-date: '%s' (source file)%n",
                                 tgt.path());
                     }
                     tgt.st_source();
@@ -550,7 +550,7 @@ class Builder {
             for (File tgt : cmd.tgts) {
                 tgt_nr++;
                 tgt.wanted_digest = node_new_dep_sig(tgt, tgt_nr);
-                //System.out.printf("WANTED DIGEST(%s) = %s\n", tgt.path(), tgt.wanted_digest);
+                //System.out.printf("WANTED DIGEST(%s) = %s%n", tgt.path(), tgt.wanted_digest);
             }
             boolean any_need_update = false;
             for (File tgt : cmd.tgts) {
@@ -603,7 +603,7 @@ class Builder {
 
                 if (Opts.quiet) {
                     command_count++;
-                    System.out.printf("[%d] %s\n", command_count, cmd.get_targets_str());
+                    System.out.printf("[%d] %s%n", command_count, cmd.get_targets_str());
                     System.out.flush();
                 }
                 else {
@@ -623,7 +623,7 @@ class Builder {
                         build_cache.put(tgt.db_dep_sig(), tgt);
                     }
                     if (tgt.m_top_target) {
-                        System.out.printf("jcons: already up-to-date: '%s'\n", tgt.path());
+                        System.out.printf("jcons: already up-to-date: '%s'%n", tgt.path());
                     }
                 }
                 STATE_finish();
@@ -682,10 +682,10 @@ class Builder {
         @Override
         void signalled_command(int exitstatus) {
             if ((exitstatus & 127) == SIGINT) {
-                System.out.printf("jcons: *** [%s] interrupted\n", tgt.path());
+                System.out.printf("jcons: *** [%s] interrupted%n", tgt.path());
             }
             else {
-                System.out.printf("jcons: *** [%s] interrupted by %d\n",
+                System.out.printf("jcons: *** [%s] interrupted by %d%n",
                         tgt.path(), exitstatus);
             }
         }
@@ -715,7 +715,7 @@ class Builder {
         // An error that may halt 'jcons', unless the -k option was given.
 
         void report_error(String err, String arg) {
-            System.out.printf("jcons: error: %s '%s'\n", err, arg);
+            System.out.printf("jcons: error: %s '%s'%n", err, arg);
             Engine.add_error();
         }
 
@@ -730,7 +730,7 @@ class Builder {
                 return true;
             }
             if (Opts.debug)
-                System.out.printf("                    need_update_p: %s <-> %s\n",
+                System.out.printf("                    need_update_p: %s <-> %s%n",
                         tgt.db_dep_sig(), tgt.wanted_digest);
             if (tgt.db_dep_sig().equals(tgt.wanted_digest)) {
                 return false;

@@ -84,7 +84,7 @@ public class Dir extends Entry {
 
 
     Dir find_dir(String path) {
-        //System.out.printf("### find_dir: %s\n", path);
+        //System.out.printf("### find_dir: %s%n", path);
         String[] parts = _split_path(path);
         return _find_dir(parts,0, parts.length);
     }
@@ -269,7 +269,7 @@ public class Dir extends Entry {
     static long curr_time_filesystem() {
         String timestamp_file = s_dot_jcons_dir + "/.timestamp";
         try(PrintWriter o = new PrintWriter(new FileWriter(timestamp_file))) {
-            o.printf("hello ...\n");
+            o.printf("hello ...%n");
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
@@ -562,7 +562,7 @@ public class Dir extends Entry {
                  }
              }
              else {
-                 System.out.printf("jcons: error: internal error\n");
+                 System.out.printf("jcons: error: internal error%n");
                  System.exit(1);
              }
          }
@@ -577,7 +577,7 @@ public class Dir extends Entry {
             Entry tgt = s_curr_dir.lookup_entry(target);
             if (tgt == null) {
                 System.out.printf(
-                        "jcons: error: don't know how to build '%s'\n", target);
+                        "jcons: error: don't know how to build '%s'%n", target);
                 errors += 1;
                 continue;
             }
@@ -593,7 +593,7 @@ public class Dir extends Entry {
                 entries.add(d);
             }
             else {
-                System.out.printf("jcons: error: internal error\n");
+                System.out.printf("jcons: error: internal error%n");
                 System.exit(1);
             }
         }

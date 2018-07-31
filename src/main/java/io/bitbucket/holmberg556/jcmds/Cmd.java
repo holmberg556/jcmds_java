@@ -121,12 +121,12 @@ public class Cmd {
     static void show_cmds() {
         for (Cmd cmd : s_all_cmds) {
             System.out.println("-----------------------------------------------------------");
-            System.out.printf("cmd: %s\n", cmd.m_cmdline);
+            System.out.printf("cmd: %s%n", cmd.m_cmdline);
             for (File src : cmd.srcs) {
-                System.out.printf("    src: %s\n", src.path());
+                System.out.printf("    src: %s%n", src.path());
             }
             for (File tgt : cmd.tgts) {
-                System.out.printf("    tgt: %s\n", tgt.path());
+                System.out.printf("    tgt: %s%n", tgt.path());
             }
         }
     }

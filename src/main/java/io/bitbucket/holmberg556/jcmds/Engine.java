@@ -51,7 +51,7 @@ public class Engine {
 
         public void show() {
             for (int i=0; i<n; i++) {
-                System.out.printf("ready[%d]: %s\n", i, arr.get(i));
+                System.out.printf("ready[%d]: %s%n", i, arr.get(i));
             }
 
         }
@@ -113,7 +113,7 @@ public class Engine {
             if (m_executing.size() > 0) {
                 if (should_terminate_p() && ! terminate_warning_given) {
                     terminate_warning_given = true;
-                    System.out.printf("jcons: *** waiting for commands to finish ...\n");
+                    System.out.printf("jcons: *** waiting for commands to finish ...%n");
                 }
                 boolean blocking =
                     (! progress || m_executing.size() >= Opts.parallel);
@@ -156,7 +156,7 @@ public class Engine {
     }
 
     public void execute_cmd(FUN_update_tgt fun, String cmdline, boolean noop, Cmd cmd) {
-        //System.out.printf("EXECUTE: %s\n", cmdline);
+        //System.out.printf("EXECUTE: %s%n", cmdline);
         int pid = this.mycommands.start(cmdline, noop);
         ExecuteContext context = new ExecuteContext();
         context.fun = fun;

@@ -39,7 +39,7 @@ class ArgParse {
             if (argv[optind].equals(optstr)) {
                 optind++;
                 if (optind == argv.length) {
-                    System.out.printf("ERROR: no option argument: %s\n",
+                    System.out.printf("ERROR: no option argument: %s%n",
                             argv[optind - 1]);
                     System.exit(1);
                 }
@@ -249,7 +249,7 @@ class ArgParse {
             }
             boolean found = findOpt();
             if (!found) {
-                System.out.printf("ERROR: unknown option: '%s'\n",
+                System.out.printf("ERROR: unknown option: '%s'%n",
                         argv[optind]);
                 System.exit(1);
             }
@@ -268,7 +268,7 @@ class ArgParse {
     }
 
     void print_usage_synopsis() {
-        System.out.printf("xxx = %s\n", Arrays.toString(argv));
+        System.out.printf("xxx = %s%n", Arrays.toString(argv));
         String leading = "usage: " + prog;
         String indent = leading.replaceAll(".", " ");
 
@@ -297,7 +297,7 @@ class ArgParse {
 
             System.out.println("positional arguments:");
             for (ArgBase arg : arguments) {
-                System.out.printf("  %-13s %s\n", arg.name, arg.help);
+                System.out.printf("  %-13s %s%n", arg.name, arg.help);
             }
             System.out.println();
         }
@@ -313,8 +313,8 @@ class ArgParse {
 //            writeln();
 //        }
 
-        System.out.printf("optional arguments:\n");
-        System.out.printf("  -h, --help            show this help message and exit\n");
+        System.out.printf("optional arguments:%n");
+        System.out.printf("  -h, --help            show this help message and exit%n");
         for (OptBase opt : opts) {
             String str = "  " + opt.names();
             int wanted = 22;
@@ -323,10 +323,10 @@ class ArgParse {
             }
             if (str.length() > wanted) {
                 System.out.println(str);
-                System.out.printf("%" + wanted + "s  %s\n", "  ", opt.help);
+                System.out.printf("%" + wanted + "s  %s%n", "  ", opt.help);
             }
             else {
-                System.out.printf("%s  %s\n", str, opt.help);
+                System.out.printf("%s  %s%n", str, opt.help);
             }
         }
     }

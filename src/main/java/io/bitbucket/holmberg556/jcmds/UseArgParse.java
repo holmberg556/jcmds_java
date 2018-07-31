@@ -18,9 +18,9 @@ public class UseArgParse {
             opt_output = value;
         });
         p.parse(args);
-        System.out.printf("verbose = %s\n", opt_verbose);
-        System.out.printf("parallel = %d\n", opt_parallel);
-        System.out.printf("output = %s\n", opt_output);
+        System.out.printf("verbose = %s%n", opt_verbose);
+        System.out.printf("parallel = %d%n", opt_parallel);
+        System.out.printf("output = %s%n", opt_output);
     }
 
 }

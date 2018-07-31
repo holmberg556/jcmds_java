@@ -17,25 +17,25 @@ public class Bar {
         String name;
 
         A(String name) {
-            System.out.printf("creating an A(%s)\n", name);
+            System.out.printf("creating an A(%s)%n", name);
             this.name = name;
             next = this::xxx;
         }
 
         void xxx() {
-            System.out.printf("a.xxx called for %s\n", this.name);
+            System.out.printf("a.xxx called for %s%n", this.name);
             next = this::yyy;
         }
 
         void yyy() {
-            System.out.printf("a.yyy called for %s\n", this.name);
+            System.out.printf("a.yyy called for %s%n", this.name);
 
             // next = this::zzz;
             next = () -> zzz();
         }
 
         void zzz() {
-            System.out.printf("a.zzz called for %s\n", this.name);
+            System.out.printf("a.zzz called for %s%n", this.name);
             next = null;
         }
 

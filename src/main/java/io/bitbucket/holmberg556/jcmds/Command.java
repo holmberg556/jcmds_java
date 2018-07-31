@@ -59,7 +59,7 @@ class Command {
                 }
                 int status = run_command(input);
                 if (Opts.debug)
-                    System.out.printf("        command in [%d]: %s ---> %d\n",
+                    System.out.printf("        command in [%d]: %s ---> %d%n",
                         i, input.command, status);
                 try {
                     qout.put(new Result(input.pid, status));
@@ -160,14 +160,14 @@ class Command {
         boolean progress = true;
         try(Scanner scanner = new Scanner(System.in)) {
             while ( nrunning > 0 || scanner.hasNextLine()) {
-                System.out.printf("### nrunning=%d, hasNextLine=%s\n",
+                System.out.printf("### nrunning=%d, hasNextLine=%s%n",
                         nrunning, scanner.hasNextLine());
                 if (nrunning > 0) {
                     boolean blocking =
                         (! progress || nrunning >= nmax);
                     Result res = mycommands.waitForOne(blocking);
                     if (res != null && res.pid != 0) {
-                        System.out.printf("process finished: %d, status: %d\n",
+                        System.out.printf("process finished: %d, status: %d%n",
                                 res.pid, res.status);
                         nrunning -= 1;
                     }
@@ -182,6 +182,6 @@ class Command {
             }
         }
         mycommands.finish();
-        System.out.println("no more input ...\n");
+        System.out.println("no more input ...%n");
     }
 }

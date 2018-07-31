@@ -176,7 +176,7 @@ class Jcmds {
 
             //--------------------
             else {
-               System.out.printf("                                   ------ Unknown command: %s\n", used_cmdline);
+               System.out.printf("                                   ------ Unknown command: %s%n", used_cmdline);
                System.exit(1);
             }
 
@@ -435,11 +435,11 @@ class Jcmds {
         }
         
         if (opt_version) {
-            System.out.printf("jcons-cmds version 0.20\n");
-            System.out.printf("\n");
-            System.out.printf("Copyright 2002-2018 Johan Holmberg <holmberg556@gmail.com>.\n");
-            System.out.printf("This is non-free software. There is NO warranty; not even\n");
-            System.out.printf("for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n");
+            System.out.printf("jcons-cmds version 0.20%n");
+            System.out.printf("%n");
+            System.out.printf("Copyright 2002-2018 Johan Holmberg <holmberg556@gmail.com>.%n");
+            System.out.printf("This is non-free software. There is NO warranty; not even%n");
+            System.out.printf("for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.%n");
             System.exit(0);
         }
     }
@@ -500,7 +500,7 @@ class Jcmds {
             for (String fname : cmds_files) {
                 try (FileReader r = new FileReader(fname)) {
                     if (Opts.verbose) {
-                        System.out.printf("+++ reading command file '%s'\n", fname);
+                        System.out.printf("+++ reading command file '%s'%n", fname);
                     }
                     String dir = new java.io.File(fname).getParent();
                     if (dir == null)
@@ -527,13 +527,13 @@ class Jcmds {
         }
         if (Opts.list_targets) {
             for (Entry tgt : tgts) {
-                System.out.printf("%s\n", tgt.path());
+                System.out.printf("%s%n", tgt.path());
             }
             System.exit(0);
         }
 
         if (Opts.list_commands) {
-            System.out.printf("tgts ============ %s\n", tgts);
+            System.out.printf("tgts ============ %s%n", tgts);
             Cmd.show_cmds();
             System.exit(0);
         }
@@ -557,7 +557,7 @@ class Jcmds {
         }
         if (paths.size() > 0) {
             Collections.sort(paths);
-            System.out.printf("jcons: error: circular dependency for '%s'\n",
+            System.out.printf("jcons: error: circular dependency for '%s'%n",
                     String.join(",", paths));
             System.exit(1);
         }
@@ -568,14 +568,14 @@ class Jcmds {
             if (entry instanceof Dir) {
                 Dir d = (Dir) entry;
                 if (!d.dirty) {
-                    System.out.printf("jcons: up-to-date: %s\n", d.path());
+                    System.out.printf("jcons: up-to-date: %s%n", d.path());
                 }
             }
         }
 
         Dir.terminate();
         if (Opts.debug)
-            System.out.printf("Exiting jcons ...\n");
+            System.out.printf("Exiting jcons ...%n");
 
 //
 //    auto engine = new Engine(tgts);
@@ -614,7 +614,7 @@ class Jcmds {
          for (File tgt : tgts) {
              if (tgt.file_exist_FORCED()) {
                  new java.io.File(tgt.path()).delete();
-                 System.out.printf("Removed %s\n", tgt.path());
+                 System.out.printf("Removed %s%n", tgt.path());
                  tgt.st_invalid_error();
              }
          }
@@ -622,7 +622,7 @@ class Jcmds {
              if (entry instanceof Dir) {
                  Dir d = (Dir) entry;
                  if (! entry.dirty) {
-                     System.out.printf("jcons: already removed: %s\n", entry.path());
+                     System.out.printf("jcons: already removed: %s%n", entry.path());
                  }
              }
          }

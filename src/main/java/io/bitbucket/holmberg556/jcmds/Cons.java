@@ -108,7 +108,7 @@ public class Cons {
     void connect_tgt(File tgt, Cmd cmd) {
         Cmd existing_cmd = tgt.cmd;
         if (existing_cmd != null) {
-            System.out.printf("jcons: error: same target twice: '%s'\n",
+            System.out.printf("jcons: error: same target twice: '%s'%n",
                     tgt.path());
             System.exit(1);
         }

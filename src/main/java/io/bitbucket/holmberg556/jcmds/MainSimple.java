@@ -27,7 +27,7 @@ public class MainSimple {
         p.parse(args);
 
         if (Opts.debug) {
-            System.out.printf("This is jcons ... %s\n", targets);
+            System.out.printf("This is jcons ... %s%n", targets);
         }
 
         Cons cons = new Cons();
@@ -47,13 +47,13 @@ public class MainSimple {
             if (entry instanceof Dir) {
                 Dir d = (Dir) entry;
                 if (! d.dirty) {
-                    System.out.printf("jcons: up-to-date: %s\n", d.path());
+                    System.out.printf("jcons: up-to-date: %s%n", d.path());
                 }
             }
         }
 
         Dir.terminate();
-        if (Opts.debug) System.out.printf("Exiting jcons ...\n");
+        if (Opts.debug) System.out.printf("Exiting jcons ...%n");
     }
 
 }
