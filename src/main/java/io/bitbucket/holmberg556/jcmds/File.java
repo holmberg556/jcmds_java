@@ -308,14 +308,15 @@ public class File extends Entry {
         return mtime;
     }
 
+    static byte[] static_buf = new byte[16384];
+
     static Digest get_file_digest(String path) {
         Md5 md5 = new Md5();
         try (FileInputStream f = new FileInputStream(path)) {
-            byte[] buf = new byte[16384];
             for (;;) {
                 int n = 0;
                 try {
-                    n = f.read(buf);
+                    n = f.read(static_buf);
                 } catch (IOException e) {
                     e.printStackTrace();
                     System.exit(1);
@@ -323,7 +324,7 @@ public class File extends Entry {
                 if (n == -1) {
                     break;
                 }
-                md5.append(buf, n);
+                md5.append(static_buf, n);
             }
         } catch (IOException e) {
             e.printStackTrace();
