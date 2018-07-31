@@ -252,11 +252,9 @@ class Builder {
         }
     }
 
-    // ======================================================================
-    // FUN_includes_md5
-    //
-    // Calculate MD5 of include tree
-
+    /************************************************************************
+     * Calculate MD5 of include tree
+     */
     static class FUN_includes_md5 extends BaseFun {
         CppPathMap cpp_path_map;
         File node;
@@ -279,7 +277,6 @@ class Builder {
 
         void STATE_start() {
             if (Opts.trace) trace_method();
-            // XXX m_includes_tree.visited = new HashSet<>();
 
             if (! m_includes_tree.visited.contains(node)) {
                 m_includes_tree.visited.add(node);

@@ -41,7 +41,6 @@ public class Consign implements java.io.Serializable {
 
     static Consign pickle_load(String consign_file) {
         Consign consign = null;
-        //System.out.printf("========> pickle_load %s\n", consign_file);
         try (FileInputStream f = new FileInputStream(consign_file);
                 ObjectInputStream fo = new ObjectInputStream(f)) {
             try {
@@ -70,9 +69,7 @@ public class Consign implements java.io.Serializable {
         pickle_dump(consign_file);
     }
 
-
     void pickle_dump(String consign_file) {
-        //System.out.printf("<======== pickle_dump %s\n", consign_file);
         try(FileOutputStream f = new FileOutputStream(consign_file);
                 ObjectOutputStream fo = new ObjectOutputStream(f)) {
                 fo.writeObject(this);
