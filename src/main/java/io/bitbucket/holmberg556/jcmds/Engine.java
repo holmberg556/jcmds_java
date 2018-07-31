@@ -58,7 +58,7 @@ public class Engine {
     }
 
     static boolean got_sigint;
-    public static Engine instance;
+    static Engine instance;
 
     QueueRun m_ready = new QueueRun();
     HashMap<Integer, ExecuteContext> m_executing = new HashMap<>();

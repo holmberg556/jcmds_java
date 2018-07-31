@@ -7,7 +7,7 @@ public class Digest implements Comparable<Digest>, java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     public static final Digest undefined;
-    public static Digest invalid;
+    public static final Digest invalid;
     
     static {
         undefined = new Digest();

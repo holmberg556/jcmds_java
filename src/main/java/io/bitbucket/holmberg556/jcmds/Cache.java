@@ -22,7 +22,6 @@ public class Cache {
     
     public void put(Digest dep_sig, File file) {
         String dep_sig_str = dep_sig.hex();
-        Digest xxx = dep_sig;
         String prefix = dep_sig_str.substring(0, 2);
         Dir cache_dir = m_cache_dir.find_dir(prefix);
         boolean ok = cache_dir.mkdir_p();
