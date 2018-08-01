@@ -27,18 +27,13 @@ class Jcmds {
     static ArrayList<String> g_EXE_DEPEND = new ArrayList<>();
     static String g_CACHEDIR;
 
-    
-    static class Foo {
-        ArrayList<String> get_strings() {
-            ArrayList<String> x = new ArrayList<>();
-            return  x;
-        }
-        
-        void fff() {
-            ArrayList<String> x = null;
-            if ((x = get_strings()) != null) {
-                System.out.println("hello");
-            }
+    static ArrayList<String> g_KNOWN_COMPILERS = null;
+    static String[] knownCompilers = { "gcc", "g++", "cc", "c++" };
+
+    static {
+        g_KNOWN_COMPILERS = new ArrayList<>();
+        for (String cc : knownCompilers) {
+            g_KNOWN_COMPILERS.add(cc);
         }
     }
 
@@ -49,7 +44,7 @@ class Jcmds {
             String idx = String.join(" ", incs);
             Cons cons = mIncsConsMap.get(idx);
             if (cons == null) {
-                cons = new Cons(); // TODO: change
+                cons = new Cons();
                 cons.set_cpp_path(incs);
                 mIncsConsMap.put(idx, cons);
             }
@@ -57,7 +52,10 @@ class Jcmds {
         }
     }
 
-    // ----------------------------------------------------------------------
+    /**
+     * Classify command lines, and identify which input, and output file(s) each
+     * command has. The result is fed into the dependency graph.
+     */
 
     static class CmdReader {
         ArrayList<String> mArgs;
@@ -112,7 +110,7 @@ class Jcmds {
             }
 
             //--------------------
-            else if ((is_cmd("gcc") || is_cmd("g++") || is_cmd("c++")) && opt_c() &&
+            else if (is_compiler() && opt_c() &&
                     (infile = src()) != null && (outfile = opt_o()) != null) {
                 ArrayList<String> args = mArgs;
                 ArrayList<String> digest_cmdline_arr = new ArrayList<>();
@@ -136,7 +134,7 @@ class Jcmds {
             }
 
             //--------------------
-            else if ((is_cmd("gcc") || is_cmd("g++") || is_cmd("c++"))
+            else if (is_compiler()
                     && !opt_c() &&
                     (infiles = objs()) != null &&
                     add_archives(infiles) &&
@@ -147,7 +145,7 @@ class Jcmds {
             }
 
             //--------------------
-            else if (is_cmd("ar") && ar_option(mArgs.get(1)) && nargs() >= 4) {
+            else if (is_cmd("ar") && ar_option(mArgs.get(1)) && mArgs.size() >= 4) {
                 outfile = mArgs.get(2);
                 infiles = new ArrayList<>();
                 for (int i = 3; i < mArgs.size(); i++) {
@@ -159,7 +157,7 @@ class Jcmds {
             }
 
             //--------------------
-            else if (is_cmd("cp") && nargs() == 3 && !is_option(mArgs.get(1))) {
+            else if (is_cmd("cp") && mArgs.size() == 3 && !is_option(mArgs.get(1))) {
                 infile = mArgs.get(1);
                 outfile = mArgs.get(2);
 
@@ -189,8 +187,13 @@ class Jcmds {
             return arg.length() > 1 && arg.startsWith("-");
         }
 
-        int nargs() {
-            return mArgs.size();
+        boolean is_compiler() {
+            for (String cc : g_KNOWN_COMPILERS) {
+                if (is_cmd(cc)) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         boolean is_cmd(String name) {
@@ -271,9 +274,6 @@ class Jcmds {
     }
 
     // ----------------------------------------------------------------------
-
-
-// ----------------------------------------------------------------------
 
     static Pattern spaces_re = Pattern.compile(" +");
 
@@ -444,45 +444,14 @@ class Jcmds {
         }
     }
 
-//----------------------------------------------------------------------
-
-//int lookup_targets(String[] targets, ref Rentry entries[], ref Rfile[] tgts) {
-//    if (targets.size() == 0) {
-//        targets ~= ".";
-//    }
-//    int errors = 0;
-//    for (target; targets) {
-//        Rentry tgt = filesystem.cwd.lookup_entry(target);
-//        if (tgt is null) {
-//            writeln("jcons: error: don't know how to build '", target, "'");
-//            errors += 1;
-//            continue;
-//        }
-//        if (auto f = cast(Rfile)tgt) {
-//            tgts ~= f;
-//            f.m_top_target = true;
-//            entries ~= f;
-//        }
-//        else  if (auto d = cast(Rdir)tgt) {
-//            d.append_files_under(tgts);
-//            entries ~= d;
-//        }
-//        else {
-//            writeln("jcons: error: internal error");
-//            exit(1);
-//        }
-//    }
-//    return errors;
-//}
-
-//----------------------------------------------------------------------
+    // ----------------------------------------------------------------------
 
      public static void main(String[] argv) {
         parse_arguments(argv);
 
-//         cons.initialize();
-//         setup_signals();
-//
+        // cons.initialize();
+        // setup_signals();
+
         if (Opts.cachedir != null) {
             Cache.set_cachedir(Opts.cachedir);
         }
@@ -574,40 +543,7 @@ class Jcmds {
         }
 
         Dir.terminate();
-        if (Opts.debug)
-            System.out.printf("Exiting jcons ...%n");
-
-//
-//    auto engine = new Engine(tgts);
-//    engine.run();
-//    scope(exit) filesystem.terminate();
-//
-//    if (Engine.got_sigint) {
-//        writeln("jcons: *** got interrupt, terminating");
-//        return 1;
-//    }
-//
-//
-//    for (entry; entries) {
-//        if (auto d = cast(Rdir)entry) {
-//            if (! entry.dirty) {
-//                writeln("jcons: up-to-date: ", entry.path);
-//            }
-//        }
-//    }
-//
         System.exit(Engine.g_nerrors == 0 ? 0 : 1);
-//}
-//
-//
-//extern (C) nothrow @nogc @system void handle_sigint_signal(int sig) {
-//    Engine.got_sigint = true;
-//}
-//
-//void setup_signals() {
-//    auto f = signal(SIGINT, &handle_sigint_signal);
-//}
-
      }
 
      static void remove_targets(ArrayList<File> tgts, ArrayList<Entry> entries) {
